@@ -1,0 +1,577 @@
+<html>
+
+<head>
+  <title>Gameplay Page</title>
+  <link rel="stylesheet" type="text/css" href="gamePage.css">
+  <link href="https://fonts.googleapis.com/css?family=Space+Mono&display=swap" rel="stylesheet">
+  <script src="gamePage.js"></script>
+  </head>
+
+  <body onload="loadFromSession(); startTimer(); healthDecay(); mapLoad();">
+
+    <!-- <audio id="buttonPress">
+      <source src="sounds\beep.wav" type="audio/wav">
+    </audio>
+
+    <audio id="error">
+      <source src="\sounds\error.wav" type="audio/wav">
+    </audio> -->
+
+    <div id="resizer">
+      <button onclick="setSize('small');" style="font-size: 75%;">Aa</button>
+      <button onclick="setSize('normal');" style="font-size: 100%;">Aa</button>
+      <button onclick="setSize('large');" style="font-size: 150%;">Aa</button>
+    </div>
+
+    <div class="wrapper normal">
+      <div id="row">
+        <div id="col1">
+
+          <div id="stats">
+            <p>Items Acquired</p>
+				<img src="images/o2Tankv2.png" alt="Oxygen tank" id="o2tankInv"  class="itemUnacquired"/>
+				<img src="images/passwordv2.png" alt="Door Password" id="passwordInv" class="itemUnacquired"/>
+				<img src="images/toolbox.png" alt="Toolbox" id="toolboxInv" class="itemUnacquired"/>
+
+				<div id="tasks">
+					<ul>
+						<li><span id="task1"><strong>Restore the ship to working condition.</strong></span></li>
+						<!-- <li><span id="task3" class="taskDiscovered"><strong>Find the keycode to open the airlock.</strong></span></li> -->
+						<li><span id="task2" class="taskUndiscovered"><strong>Repair the oxygen systems.</strong></span></li>
+						<li><span id="task4" class="taskUndiscovered"><strong>Repair the hull.</strong></span></li>
+				</div>
+          </div>
+
+          <div id="display">
+          <img id="shipPlan" src=""
+          alt="Plan of the spaceship and rooms which the user are currently in"/>
+            <div id="timerBlock">
+              You have <span id="timer">300</span> seconds left.
+            </div>
+          </div>
+        </div>
+
+        <div id="col2">
+
+          <div id="gameDetails">
+
+
+              <img src="images\enemyShip.png" id="enemyShip" alt="Image showing enemy ship">
+              <img src="images\oxygenBg.png" id="oxygenBg" class="hideMe" alt="Image showing background of oxygen room">
+              <img src="images\hallway.png" id="hallway" class="hideMe" alt="Image showing ship hallway">
+            <div id='mathsQuiz' style="display: none;">
+
+              <div id='mathIntro'>
+
+                <p id="quizText">You must correctly answer the following questions before time runs out.<br>WARNING: Harder difficulty makes oxygen deplete faster for wrong answers!</p>
+                <div id="diffSelect"
+
+                <label for="difficulty">Difficulty: </label>
+                <select id="difficulty" style="color:black;">
+                  <option value="easy">Easy</option>
+                  <option value="medium">Medium</option>
+                  <option value="hard">Hard</option>
+                </select>
+
+              </div>
+
+                <button onclick="startQuiz();" id="startQuizBtn"> Begin Software Bypass </button>
+
+              </div>
+
+              <div id='mathGame'>
+                <div id="mathQuestions">
+
+                <p class="headText"> What is the answer to the following: </p>
+                  <div >
+                    <p id="question1" class="questionText">What is the chemical symbol for oxygen?</p>
+                  </div>
+
+                </div>
+
+              <div id="mathAnswers">
+                <ol id="answers1" class="answers">
+
+                  <li class="answer"><a href="#" onclick="err.play();chooseIncorrect();">CO<sub>2</sub></a></li>
+                  <li class="answer"><a href="#" onclick="beep.play();chooseCorrect1();">O<sub>2</sub></a></li>
+                  <li class="answer"><a href="#" onclick="err.play();chooseIncorrect();">H<sub>2</sub></a></li>
+                  <li class="answer"><a href="#" onclick="err.play();chooseIncorrect();">Mg</a></li>
+
+                </ol>
+
+                <ol id="answers2" class="hideMe answers">
+
+                  <li class="answer"><a href="#" onclick="err.play();chooseIncorrect();">1</a></li>
+                  <li class="answer"><a href="#" onclick="err.play();chooseIncorrect();">14</a></li>
+                  <li class="answer"><a href="#" onclick="err.play();chooseIncorrect();">9</a></li>
+                  <li class="answer"><a href="#" onclick="beep.play();chooseCorrect2();">7</a></li>
+                </ol>
+
+                <ol id="answers3" class="hideMe answers">
+
+                  <li class="answer"><a href="#" onclick="beep.play();chooseCorrect3();">Mercury,<br>Venus,<br>Earth,<br>Mars,<br>Jupiter,<br>Saturn,<br>Uranus,<br>Neptune</a></li>
+                  <li class="answer"><a href="#" onclick="err.play();chooseIncorrect();">Mercury,<br>Venus,<br>Earth,<br>Mars,<br>Jupiter,<br>Saturn,<br>Uranus,<br>Neptune,<br>Pluto</a></li>
+                  <li class="answer"><a href="#" onclick="err.play();chooseIncorrect();">Mars,<br>Venus,<br>Uranus,<br>Mercury,<br>Saturn,<br>Jupiter,<br>Earth,<br>Neptune</a></li>
+                  <li class="answer"><a href="#" onclick="err.play();chooseIncorrect();">Venus,<br>Earth,<br>Mars,<br>Mercury,<br>Jupiter,<br>Neptune,<br>Uranus,<br>Saturn,<br>Pluto</a></li>
+                </ol>
+              </div>
+              </div>
+            </div>
+
+            <div id="hpstatus">
+            <div id="healthbar"></div>
+          </div>
+          <div id="o2status">
+          <div id="oxygenbar"></div>
+        </div>
+
+        <h4 style="color: red; text-decoration: none;" id="enemyHeader">Enemy Spaceship <span id="enemyHealth" style="color: white">100%</span></h4>
+        <div id="enemyHpStatus"><div id="enemyHpBar"></div></div>
+
+        <!--VENT IMAGE-->
+        <div id="ventImage">
+          <img id="ventilation" src="images/ventImageResize.png" alt="Image of the ventilation system" style="display: none; margin-left: auto; margin-right: auto; margin-top: auto; margin-bottom: auto;"/>
+        </div>
+
+        <!--HEAT REFLECTORS-->
+        <div id="initialHeatReflectors">
+            <img id="pressHatch" src="images/pressHatch.jpg" alt="Press Hatch to open door" style="display: none;"/>
+        </div>
+        <div>
+            <img id="wiringImg" src="images/wiring.jpg" alt ="wiring" style="display: none";/>
+            <br/>
+        </div>
+        <div>
+            <img id="successImg" src="images/Success2.png" alt="ignition complete" style="display: none";/>
+        </div>
+        <div>
+            <img id="buttonImg" src="images/CargoDoorRelease.jpg" alt="cargo&hatch door buttons" style="display: none;";/>
+        </div>
+        <div>
+            <img id="shipExplosion" src="images/spaceExplosion.jpg" alt="Ship has blown up"; style="display: none"; />
+        </div>
+
+        <br/>
+
+        <!--SUCCESS SCREEN - BOTH FAULTS FIXED (oxygen tanks + heat reflectors)-->
+        <div id=successScreen>
+          <h1>You have fixed the faults with the ship!</h1>
+          <p>Earth is in sight! You will be able to land soon - safe and all in one piece.</p>
+
+        </div>
+
+      </div>
+
+          <!--GAME TEXT-->
+          <div id="gameText">
+            <div id="statusBars">
+            <div id="statusBar1">
+            <p>Current Health: <span id="health">100%</span></p>
+          </div>
+          <div id="statusBar2">
+            <p>Current Oxygen Levels: <span id="oxygen">100%</span></p>
+          </div>
+        </div>
+
+        <!--PRE-FIRE + VENT-->
+        <div id="dialogue1">
+          <p style="text-align: center;">WARNING: You are under fire from an enemy ship!</p>
+            <ol class="options">
+              <div id="dialogue1"><li style="color: white;">They are shooting your ship! You need to dodge their shots!</li></div>
+                <div id="dia1_Option1"><li id="moveLeft"><a href="#" onclick="updateHealth(-60); hideDialogue1(); showLeftResult();">Dodge left!</a></li></div>
+                <div id="dia1_Option2"><li id ="moveRight"><a href="#" onclick="updateHealth(); hideDialogue1(); showRightResult();">Dodge right!</a></li></div>
+              </ol>
+            </div>
+
+            <!--If the user selects move left - shares result if user dodges right - introductory fight scene-->
+            <div id="leftResult_Dialogue1" style="display: none;"> <!--The result of picking dodge left in dialogue 1-->
+              <p style="text-align: center;">You moved right into their fire! You and your ship have taken significant damage... <br/> <strong>The enemy seems fatigued! Nows your chance! </strong></p>
+              <ol class="options">
+                <div id="leftResult_Option1"><li style="color:white;">Attempt to fire back!
+                  <ul>
+                    <li id="leftResult_SubOption1"><a href="#" onclick="enemyDamage(-100); hideLeftResultDialogue(); showDoorResult(); updateHealth(-60);">Aim at the door</a></li> <!--This will NOT deal fatal damage, user takes damage as a result but still continues-->
+                    <li id="leftResult_SubOption2"><a href="#"  onclick="enemyDamage(-250); hideLeftResultDialogue(); showTankResult(); enemyDefeated();">Aim at the fuel tank</a></li> <!--This will deal fatal damage, leading to the user being victorius and allowing them to continue-->
+                    <li id="leftResult_SubOption3"><a href="#"  onclick="enemyDamage(-250); hideLeftResultDialogue(); showWindowResult(); enemyDefeated();">Aim at the window</a></li> <!--This will deal fatal damage, leading to the user being victorius and allowing them to continue-->
+                  </ul>
+                </li></div>
+                <div id="leftResult_Option2"><li><a href="#" onclick="updateHealth(-420); hideLeftResultDialogue(); showWaitResult();" style="color:white;">Wait it out..</a></li></div> <!--The user waits and does nothing.. - taking a lot of damage-->
+              </ol>
+            </div>
+
+            <!--If the user selects move right - shares result if user dodges left - introductory fight scene-->
+            <div id="rightResult_Dialogue1" style="display: none;"> <!--The result of picking dodge right in dialogue 1-->
+              <p style="text-align: center;">You dodged their shot! You have time to fire back!</p>
+              <ol class ="options">
+                <div id="rightResult_Option1"><li style="color:white;">Attempt to fire back!
+                  <ul>
+                    <li id="rightResult_SubOption1"><a href="#" onclick="enemyDamage(-100); hideRightResultDialogue(); showDoorResult(); updateHealth(-60);">Aim at the door</a></li> <!--This will NOT deal fatal damage, user takes damage as a result but still continues-->
+                    <li id="rightResult_SubOption2"><a href="#"  onclick="enemyDamage(-250); hideRightResultDialogue(); showTankResult(); enemyDefeated();">Aim at the fuel tank</a></li> <!--This will deal fatal damage, leading to the user being victorius and allowing them to continue-->
+                    <li id="rightResult_SubOption3"><a href="#"  onclick="enemyDamage(-250); hideRightResultDialogue(); showWindowResult(); enemyDefeated();">Aim at the window</a></li> <!--This will deal fatal damage, leading to the user being victorius and allowing them to continue-->
+                  </ul>
+                </li></div>
+                <div id="rightResult_Option2"><li><a href="#" onclick="updateHealth(-420); hideRightResultDialogue(); showWaitResult();" style="color:white;">Wait it out..</a></li></div> <!--The user waits and does nothing.. - taking a lot of damage-->
+              </ol>
+            </div>
+
+            <!--User selects wait it out...-->
+            <div id="waitResult" style="display: none;">
+              <p style="text-align: center;">You did nothing and the enemy spaceship fired mercilessly. You and your ship take almost fatal damage. Your oxygen tanks take major damage, causing an oxygen leak. Oxygen has decreased substantially. <br/>
+              <span style="color: white;">You <strong style="color: white;">NEED</strong> to check the damage as fast as possible - before your oxygen is depleted!</span></p>
+              <ul>
+                <li id="waitResult_Option1"> <a href="#" onclick="hideWaitResult(); showOxygenTanks(); removeEnemyShip();">Check oxygen tanks</a></li>
+                <li id="waitResult_Option2"> <a href="#" onclick="hideWaitResult(); showHeatReflectors(); removeEnemyShip();">Check heat reflectors</a></li>
+                <li id="waitResult_Option3"> <a href="#" onclick="hideDmgDoorResult(); showLoudSound(); removeEnemyShip();">What was that loud sound?</a></li>
+              </ul>
+            </div>
+
+            <!--User aims at door-->
+            <div id="dmgDoorResult" style="display: none;"> <!--Does not defeat enemy - enemy attacks back then retreats, user takes damage-->
+              <p style="text-align: center;">Firing towards their door didn't seem to do much.. <br/> WARNING: INCOMING ATTACK! </p>
+              <ol class="options">
+              <li id="doorResult_Dialogue" style="color: white;">Atleast they're gone now... But look at the damage dealt to your ship!
+                  <ul>
+                    <li id="doorResult_Option1"> <a href="#" onclick="hideDmgDoorResult(); showOxygenTanks(); removeEnemyShip();">Check your oxygen levels. There could be damage to the tank</a></li>
+                    <li id="doorResult_Option2"> <a href="#" onclick="hideDmgDoorResult(); showHeatReflectors(); removeEnemyShip();">You feel a chill.. check the heat reflectors</a></li>
+                    <li id="doorResult_Option3"> <a href="#" onclick="hideDmgDoorResult(); showLoudSound(); removeEnemyShip();">What was that loud sound?</a></li>
+                </li>
+              </ol>
+            </div>
+
+            <!--User aims at fuel tank-->
+            <div id="dmgTankResult" style="display: none;"> <!--User defeats enemy - freely moving on to next area not taking damage-->
+              <p style="text-align: center;">Your shot went straight through their fuel tank and you can be sure they won't try that again. You defeated the enemy!</p>
+              <ol class="options">
+                <li id="tankResult_Dialogue" style="color: white;"> But look at the state of your ship.. you need to fix it
+                  <ul>
+                    <li id="tankResult_Option1"><a href="#" onclick="hideDmgTankResult(); showOxygenTanks(); removeEnemyShip();">Check oxygen levels for potential damage to the tank</a></li>
+                    <li id="tankResult_Option2"><a href="#" onclick="hideDmgTankResult(); showHeatReflectors(); removeEnemyShip();">Has it got cold in here? Check the heat reflectors outside</a></li>
+                    <li id="tankResult_Option3"><a href="#" onclick="hideDmgTankResult(); showLoudSound(); removeEnemyShip();">What was that loud sound?</a></li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+
+            <!--User aims at window-->
+            <div id="dmgWindowResult" style="display: none;"> <!--User defeats enemy - freely moving on to next area not taking damage-->
+              <p style="text-align: center;">You aim through the front window of their ship. Your fire penetrated straight through and killed the captain.<br/> With no one driving the enemy crashed right into a small asteroid. Blowing them to pieces.</p>
+              <ol class="options">
+                <li id="windowResult_Dialogue" style="color: white;"> You should check your ship for any damage done
+                  <ul>
+                    <li id="windowResult_Option1"><a href="#" onclick="hideDmgWindowResult(); showOxygenTanks(); removeEnemyShip();showOxygenRoom();">Go to the oxygen room to check the damage</a></li>
+                    <li id="windowResult_Option2"><a href="#" onclick="hideDmgWindowResult(); showHeatReflectors(); removeEnemyShip();">Head outside to fix the heat reflectors</a></li>
+                    <li id="windowResult_Option3"> <a href="#" onclick="hideDmgWindowResult(); showLoudSound(); removeEnemyShip();">What was that loud sound?</a></li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+
+            <div id="checkOxygenTanks" style="display: none;">
+              <p style="text-align: center;">The oxygen tanks are in the reactor room</p>
+              <ol class="options">
+                <li id="checkOxygenTanksDialogue" style="color: white;">Should you investigate?
+                  <ul>
+                    <li id="checkOxygenTanksOption1"><a href="#" onclick="hideCheckOxygen(); showPreventOxygenCheck();showOxygenRoom();">Go check the oxygen tanks in the reactor room</a></li> <!--function to go to oxygen dialogue line-->
+                    <li id="checkOxygenTanksOption2"><a href="#" onclick="hideCheckOxygen(); showHeatReflectors();">Check the heat reflectors outside instead</a></li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+
+            <div id="checkHeatReflectors" style="display: none;">
+              <p style="text-align: center;">The heat reflectors are on the outside of the ship</p>
+              <ol class="options">
+                <li id="checkHeatReflectorsDialogue" style="color: white;">
+                  <ul>
+                    <li id="checkHeatReflectorsOption1"><a href="#" onclick="hideCheckReflectors(); showDoorLocked(); showHallway();">Go outside to fix the heat reflectors</a></li>
+                    <li id="checkHeatReflectorsOption2"><a href="#" onclick="hideCheckReflectors(); showOxygenTanks();showOxygenRoom();">Check the oxygen tanks instead</a></li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+
+<!--came from vent. user enters vent. user should find a torch previous? challenge: maze type challenge // go left // go right // dead end etc. can return back through the vent without doing the maze (with one choice)-->
+            <div id="checkLoudSound" style="display: none;"> <!--VENT MAZE-->
+              <p style="text-align: center;">The sound came from the ventilation system. I wonder where it leads?</p>
+              <ol class="options">
+                <li id="loudSound_Dialogue" style="color: white;">Should you investigate? or just ignore it?
+                  <ul>
+                    <li id="loudSoundOption1"><a href="#" onclick="hideCheckLoudSound(); showVentMaze(); showVentImage();">Enter the vent to investigate</a></li>
+                    <li id="loudSoundOption2"><a href="#" onclick="hideCheckLoudSound(); goBack();">It's dark in there... I'll go back and investigate elsewhere</a></li> <!--Return back to options //check oxygen, heat reflectors, loud sound-->
+                  </ul>
+                </li>
+              </ol>
+            </div>
+
+            <div id="ventMaze" style="display: none;"> <!--Challenge to find the way through the vent, find the key and return to the 'goback' function-->
+              <p style="text-align: center;">It's quite dark in here... </p>
+              <ol class="options">
+                <li id="ventMaze_one" style="color: white;">You feel around, there looks to be different directions you can go
+                  <ul>
+                    <li id="ventMazeOption1"><a href="#" onclick="hideVentMaze(); showVentDirection1();">Go west</a></li>
+                    <li id="ventMazeOption2"><a href="#" onclick="hideVentMaze(); goBack(); hideVentImage();">Leave the vent, back the way you came from</a></li> <!--Return back to options //check oxygen, heat reflectors, loud sound-->
+                  </ul>
+                </li>
+              </ol>
+            </div>
+
+            <div id="doorLocked" style="display: none;">
+              <p style="text-align: center;">You attempt to open the door to go outside, but it's locked. There must be a key somewhere..</p>
+              <ol class="options">
+                <li id="doorLocked_Option1" style="color: white;"><a href="#" onclick="hideDoorLocked(); goBack(); hideHallway();" style="text-align: center;">Go back and look for the key</a></li> <!--Redirect user back to other options-->
+                <li id="doorLocked_Option2"><a href="#" onclick="hideDoorLocked(); showEnterPassword();">Enter the password</a></li> <!--If its wrong, return the user to the goBack(); function-->
+              </ol>
+            </div>
+
+            <div id="preventOxygenCheck" style="display: none;"> <!--This must be used to prevent the user from checking the oxygen tanks before investigating the vent.
+              Otherwise the user will be able to loop/investigate oxygen tanks twice, before the vent and after it.
+              The check oxygentanks will be selected from options AFTER leaving the vent.-->
+              <p style="text-align: center;">You should probably check out the loud noise before doing anything else..</p>
+              <ol class="options">
+                <li id="checkLoudSound_"><a href="#" onclick="hidePreventOxygenCheck(); goBack(); hideOxygenRoom();">Return to the cockpit and investigate the sound</a></li>
+              </ol>
+              </div>
+
+            <div id="goBackDialogue" style="display: none;">
+              <p style="text-align: center;"></p>
+              <ol class="options">
+                <li id="goBack" style="color: white;"> You're back in the cockpit. What are you going to do now?
+                  <ul>
+                    <li id="goBackOption1"><a href="#" onclick="hideGoBack(); showOxygenTanks();">Go check the oxygen tanks</a></li>
+                    <li id="goBackOption2"><a href="#" onclick="hideGoBack(); showDoorLocked();">Check the door that leads outside to the heat reflectors again</a></li>
+                    <li id="goBackOption3"> <a href="#" onclick="hideGoBack(); showLoudSound();">Investigate the loud sound</a></li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+
+            <div id="ventDirection1_West" style="display: none;">
+              <p style="text-align: center;">This is confusing, right? There is a path south of here.. </p>
+              <ol class="options">
+                <li id="direction1_West" style="color: white;"> It's getting harder to breathe.. especially being in the vents..
+                  <ul>
+                    <li id="direction1West_Option1"><a href="#" onclick="hideVentDirection1(); showVentDirection2South();">Go south..</a></li>
+                    <li id="direction1West_Option2"><a href="#" onclick="hideVentDirection1(); goBack();">It's not too late to leave the vent...</a></li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+
+            <div id="ventDirection2_South" style="display: none;">
+              <p style="text-align: center;">You've reached a sort of crossroads. What will you do?</p>
+              <ol class="options">
+                <li id="direction2_South" style="color: white;"> There seems to be a path south, and one east.
+                  <ul>
+                    <li id="direction2South_Option1"><a href="#" onclick="hideDirection2South(); showDirection3South();">Go south again</a></li>
+                    <li id="direction2South_Option2"><a href="#" onclick="hideDirection2South(); showDirection3East();">Head east</a></li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+
+            <div id="ventDirection3_South" style="display: none;">
+              <p style="text-align: center;">You see a small glimpse of light, you can see your surroundings</p>
+              <ol class="options">
+                <li id="ventDirection3_South" style="color: white;"> The light is coming from the west
+                  <ul>
+                    <li id="direction3South_Option1"><a href="#" onclick="hideDirection3South(); showDirection4South();">Go south anyways</a></li>
+                    <li id="direction3South_Option2"><a href="#" onclick="hideDirection3South(); showDirection4West();">Head towards the light - west</a></li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+
+            <div id="ventDirection3_East" style="display: none;">
+              <p style="text-align: center;">You take in a feel of your surroundings..</p>
+              <ol class="options">
+                <li id="direction3_East" style="color: white;">  There is a path north and a path east
+                  <ul>
+                    <li id="direction3East_Option1"><a href="#" onclick="hideDirection3East(); showDirection5North();">Go north</a></li>
+                    <li id="direction3East_Option2"><a href="#" onclick="hideDirection3East(); showDirection5East();">Go east again</a></li>
+                    <li id="direction3East_Option3"><a href="#" onclick="hideDirection3East(); showDirection2South();">Go back</a></li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+
+            <div id="ventDirection4_South" style="display: none;">
+              <p style="text-align: center;">This is a dead end</p>
+              <ol class="options">
+                <li id="ventDirection4_South" style="color: white;">You might want to go the other way..
+                  <ul>
+                    <li id="direction4South_Option1"><a href="#" onclick="hideDirection4South(); showDirection4West();">Crawl backwards and go west instead</a></li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+
+            <div id="ventDirection4_West" style="display: none;">
+              <p style="text-align: center;">You have reached the end of the ventilation system!</p>
+              <ol class="options">
+                <li id="ventDirection4_West" style="color: white;"> How do you get out with the vent gate there..
+                  <ul>
+                    <li id="direction4West_Option1"><a href="#" onclick="hideDirection4West(); showPasswordRoom();">Push through the vent gate</a></li> <!--End of the vent system-->
+                    <li id="direction4West_Option2"><a href="#" onclick="hideDirection4West(); showDirection3South();">Turn around and go the other way</a></li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+
+            <div id="passwordRoom" style="display: none;">
+              <p style="text-align: center;">You look around the room and find a piece of paper. It reads: PASSWORD: Password123</p>
+              <ol class="options">
+                <li id="ventDirection4_South" style="color: white;">This could be the password for the door!
+                  <ul>
+                    <li id="passwordRoomOption"><a href="#" onclick="hidePasswordRoom(); leaveVent(); hideVentImage();">Go back through the vent</a></li> <!--user can now go outside and fix heat reflectors-->
+                  </ul>
+                </li>
+              </ol>
+            </div>
+
+            <div id="ventDirection5_East" style="display: none;">
+              <p style="text-align: center;">This is a dead ending. You went the wrong way.</p>
+              <ol class="options">
+                <li id="direction3_East" style="color: white;">
+                  <ul>
+                    <li id="direction3East_Option1"><a href="#" onclick="hideDirection5East(); showDirection3East();">
+                      previous area</a></li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+
+            <div id="ventDirection5_North" style="display: none;">
+              <p style="text-align: center;">There is another path north, but it is pitch black with no sign of any light and with a cool feeling coming from it..</p>
+              <ol class="options">
+                <li id="direction3_East" style="color: white;">It probably isn't a good idea to go north..
+                  <ul>
+                    <li id="direction5North_Option1"><a href="#" onclick="hideDirection5North(); showDirection6North(); updateHealth(-health);">Head north anyways</a></li> <!--LEADS OUTSIDE, FALLS OUT OF SPACESHIP - GAME OVER.-->
+                    <li id="direction5North_Option2"><a href="#" onclick="hideDirection5North(); showVentDirection2();">Go back to the crossroads</a></li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+
+            <div id="ventDirection6_North_Death" style="display: none;">
+              <p style="text-align: center;">You crawl straight out of the ventilation system into outer space.</p>
+              <ol class="options">
+                <li id="direction6_North_Death" style="color: white;">You fall to your death. GAME OVER.
+                </li>
+              </ol>
+            </div>
+
+            <div id="vent_Left" style="display: none;">
+              <p style="text-align: center;">You found the way out again and kept the password in your pocket. You can now unlock the door to outside!</p>
+              <ol class="options">
+                <li id="leftVent" style="color: white;">
+                  <ul>
+                    <li id="leftVent_OxygenTanks"><a href="#" onclick="hideVentLeft(); showFixOxygenTanks();showOxygenRoom();">You can go check the oxygen tanks now</li> <!--This is the same as previous onclick functions-->
+                    <li id="leftVent_HeatReflectors"><a href="#" onclick="hideVentLeft(); showDoorLocked(); showHallway();">Enter the password to go outside and fix the reflectors</li> <!--This does not bring the user to doorLocked(); function as they have acquired the password-->
+                  </ul>
+                </li>
+              </ol>
+            </div>
+
+            <div id="enterPassword" style="display: none;">
+              <p style="text-align: center;">This door is password protected in the case of an emergency. Enter the password to open</p>
+              <p><a href="#" onclick="enterPassword();" style="text-align: center;">Enter the password:</a> <span id="userPassword"></span></p>
+              <br/>
+              <p style="font-size: 0.5em; text-align: center;">If incorrectly input or guessed wrong, you will be redirected to the previous screen</p>
+            </div>
+
+            <div id="correctPassword" style="display: none;"> <!--fixing heat reflectors-->
+            </div>
+
+          <!--OXYGEN TANK-->
+            <div id="fixOxygenTanks" style="display: none;"> <!--fixing oxygen tanks-->
+              <p id="desc">You make your way to the oxygen room.</p>
+              <p id="needTank" class="promptHidden">You need the oxygen tank in order to proceed.</p>
+        <ol id="optionsOxygen">
+          <li><a href="#" onclick="lookAroundOxygen();" id="lookAroundO2">Look around</a></li>
+          <li><a href="#" onclick="pickUpTank();" id="pickUpTank" class="promptHidden">Take the oxygen tank</a></li>
+          <li><a href="#" onclick="checkTerminal();" id="checkTerminal" class="promptHidden">Examine the terminal</a></li>
+          <li><a href="#" onclick="repairOxygen();" id="repairOxygen" class="promptHidden">Attempt to repair the oxygen system</a></li>
+          <li><a href="#" onclick="returnHallway(); showHallway();" id="returnHallway">Check the rest of the ship</a></li> <!--Hallway == next location, either fixing heat reflectors or success screen-->
+          <!-- <li><a href="#" onclick="pickUpToolbox();" id="pickUpItem">Take the toolbox</a></li> -->
+        </ol>
+            </div>
+
+            <!--HEAT REFLECTORS-->
+            <!--Main text box-->
+            <!--The player is in the pressurized docking where they will press a button to access the wiring of the the heat reflectors-->
+            <div id="outside" style="display: none;">
+                <p style="text-align: center;">You are now on the pressurized dock on the outside of the ship. You must open the hatch to repair the wiring of the heat reflectors.</p>
+                <br>
+                <button class="hover"; style="color: white; background-color: black; font-size: 24px; margin-left: 40%; width: 22%;" onclick="hideOutside(); hidePressHatchImage(); showOpenHatch(); showWiringImage(); hideHallway();">open up the hatch</button>
+            </div>
+            <!--The hatch has been opened and the player is now faced with a simple task-->
+            <div id="openHatch" style="display: none;">
+                <p style="text-align: center;">The hatch has now been opened. You see a mess of wires that have become unplugged. You must try to remove all the burnt out wires to enable the heat reflectors to start
+                    up again.
+                    Once you have cleared all the burnt out wires, press the <i><b style="color: rgb(199, 248, 23);">ignition</b></i> button. Be careful not to touch any live wires of it could be costly to the ship!
+                </p>
+                <button id="broken1" class="hover"; style="color: rgb(3, 2, 2); background-color: darkgoldenrod;" onclick="hideBrokenButton1();">busted wire</button>
+                <button id="live6" class="hover"; style="color: rgb(3, 2, 2); background-color: rgb(248, 23, 23);" onclick="damage();">Red Wire</button>
+                <button id="broken2" class="hover"; style="color: rgb(3, 2, 2); background-color: darkgoldenrod;" onclick="hideBrokenButton2();">busted wire</button>
+                <button id="live7" class="hover"; style="color: rgb(248, 241, 241); background-color: rgb(23, 38, 248);" onclick="damage();">Red Wire</button>
+                <button id="broken5" class="hover"; style="color: rgb(3, 2, 2); background-color: darkgoldenrod;" onclick="hideBrokenButton5();">busted wire</button>
+                <button id="live6" class="hover"; style="color: rgb(3, 2, 2); background-color: rgb(248, 23, 23);" onclick="damage();">Red Wire</button>
+                <button id="live8" class="hover"; style="color: rgb(3, 2, 2); background-color: rgb(248, 23, 23);" onclick="damage();">Red Wire</button>
+                <button id="live9" class="hover"; style="color: rgb(248, 241, 241); background-color: rgb(23, 38, 248);" onclick="damage();">Red Wire</button>
+                <button id="broken3" class="hover"; style="color: rgb(3, 2, 2); background-color: darkgoldenrod;" onclick="hideBrokenButton3();">busted wire</button>
+                <button id="live7" class="hover"; style="color: rgb(248, 241, 241); background-color: rgb(23, 38, 248);" onclick="damage();">Red Wire</button>
+                <button id="live6" class="hover"; style="color: rgb(3, 2, 2); background-color: rgb(248, 23, 23);" onclick="damage();">Red Wire</button>
+                <button id="live10" class="hover"; style="color: rgb(3, 2, 2); background-color: rgb(248, 23, 23);" onclick="damage();">Red Wire</button>
+                <button id="live11" class="hover"; style="color: rgb(248, 241, 241); background-color: rgb(23, 38, 248);" onclick="damage();">Red Wire</button>
+                <button id="broken4" class="hover"; style="color: rgb(3, 2, 2); background-color: darkgoldenrod;" onclick="hideBrokenButton4();">busted wire</button>
+                <button id="live7" class="hover"; style="color: rgb(248, 241, 241); background-color: rgb(23, 38, 248);" onclick="damage();">Red Wire</button>
+                <button id="live7" class="hover"; style="color: rgb(248, 241, 241); background-color: rgb(23, 38, 248);" onclick="damage();">Red Wire</button>
+                <button id="live12" class="hover"; style="color: rgb(3, 2, 2); background-color: rgb(248, 23, 23);" onclick="damage();">Red Wire</button>
+                <button id="live13" class="hover"; style="color: rgb(248, 241, 241); background-color: rgb(23, 38, 248);" onclick="damage();">Red Wire</button>
+                <button id="ignite" class="hover"; style="color: rgb(3, 2, 2); background-color: rgb(23, 248, 91);" onclick="hideOpenHatch(); showWiringFixed(); hideWiringImage(); showSuccessImage();">Ignition</button>
+            </div>
+
+            <!--The challenge has been completed and now the player must get back into the ship - faced with two different option-->
+            <div id="fixed" style="display: none;">
+                <p>Brilliant! The heat reflectors are now up and running. Now you must get safely back inside the ship.<a href="#"><span class="hover"; style="color: chocolate;" onclick="showTextTwo(); hideSuccesImage(); showButtonImage();">   >>>></span></a></p>
+                <p id="text2" style="display:none; ">Press the release button to open the hatch and get back into the docking bay. Dont even think of pressing the other release!<a href="#"><span class="hover"; style="color: chocolate;" onclick="showTextThree();">   >>>></span></a></p>
+                <br>
+                <p id="text3" style="display: none; ">...WAIT...or is it the other way around?<a href="#"><span class="hover"; style="color: chocolate;" onclick="showTextFour();">   >>>></span></a></p>
+                <br>
+                <p id="text4" style="display: none;"> No, we definitely had it correct the first time...<a href="#"><span class="hover"; style="color: chocolate;" onclick="showTextFive();">   >>>></span></a></p>
+                <br>
+                <p id="text5" style="display: none;">Press one..<a href="#"><span class="hover"; style="color: chocolate;" onclick="showReleaseButton1(); showReleaseButton2();">   >>>></span></a></p>
+                <br>
+                <button id="buttonGetInside1" class="hover"; style="display: none; color: white; background-color:dodgerblue" onclick="hideFixedScreen(); hideButtonImage(); showBackInsideShip(); ">Hatch Release</button>
+                <button id="buttonGetInside2" class="hover"; style="display: none; color: white; background-color: crimson;" onclick="damageCargoDoor(); showDestroyedMessage(); hideFixedScreen(); hideButtonImage(); showSpaceExplosion();">Cargo Bay Release</button>
+            </div>
+
+            <!--This is the Cargo Door option where the player is destroyed. Health = 0 & Game Over-->
+            <div id="destroyed" style="display: none;">
+                <h1 style="color: crimson; text-align: center;">OH DEAR, you seem to have blown yourself up :(</h1>
+                <br>
+                <h2 style="color: crimson; text-align: center;">We did tell you though...</h2>
+            </div>
+
+            <!--This is the Hatch Release option where the player correctly gets back into the ship-->
+            <div id="inside" style="display: none;">
+                <h3>Whew.. You're back onboard the ship now. One press of the wrong button and you would have been space soup!</h3>
+                <p>I'm glad you listened to my very clear instructions... Now, let's see about getting this ship back landed and back onto the planet for full repair.</p>
+                <ol>
+                    <div>
+                        <li style="color: white;">Where shall we move to next?</li>
+                    </div>
+                    <div id="inside_Option1">
+                        <li><a href="#" onclick="investigateShip();hideHallway();">Investigate the rest of the ship</a></li> <!--Moves to success screen if the user has completed oxygen tanks or the fix oxygen tank room fi not-->
+                    </div>
+                </ol>
+            </div>
+
+
+          </div>
+        </div>
+        </div>
+      </div>
+
+    </body>
+
+</html>

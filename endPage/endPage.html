@@ -1,0 +1,50 @@
+<html>
+
+<head>
+  <title>End Game Page</title>
+  <link rel="stylesheet" type="text/css" href="endPage.css">
+  <link href="https://fonts.googleapis.com/css?family=Space+Mono&display=swap" rel="stylesheet">
+  <script src="endPage.js"></script>
+</head>
+
+<body onload="loadFromSession(); getVariables(); stopTimer();">
+
+  <div id="resizer">
+    <button onclick="setSize('small');" style="font-size: 75%;">Aa</button>
+    <button onclick="setSize('normal');" style="font-size: 100%;">Aa</button>
+    <button onclick="setSize('large');" style="font-size: 150%;">Aa</button>
+  </div>
+
+  <div class="wrapper normal">
+
+    <h1 style="text-decoration: underline;">Stats Page:</h1>
+    <div class="userStats">
+      <h2 style="text-decoration: underline;">Users Stats</h2>
+      <p>Username: <span id="getUsername"></span></p>
+      <p>Gender: <span id="getGender"></span></p>
+      <p>Age: <span id="getAge"></span></p>
+      <p>Spacesuit: <span id="getColor"></span></p>
+      <div id="getSpacesuit"></div>
+    </div>
+      <div class="stats">
+        <h2 style="text-decoration: underline;">General Stats</h2>
+        <p>Oxygen remaining: <span id="getOxygen">0</span> <br/></p>
+                            <p style="text-indent: 180px; border-bottom: 1px gray solid;"><span id="oxygenPercent">0%</span></p>
+        <p>Health remaining: <span id="getHealth">0</span> <br/></p>
+                            <p style="text-indent: 180px; border-bottom: 1px gray solid;"><span id="healthPercent">0%</span></p>
+        <p style="border-bottom: 1px gray solid;">Time remaining: <span id="getTime"></span> seconds</p>
+        <p>Final Score: <span id="finalScore">0</span> <br/></p>
+      </div>
+
+  <hr/>
+
+  <div id="buttons">
+    <div id="restart"><button><a href="..\landingPage\landingPage.html" style="text-decoration: none; color: black;">Restart Game</a></button></div>
+    <div id="exit"><button><a href="Javascript: close_window();" style="text-decoration: none; color: black;">Exit Game</a></button></div>
+  </div>
+
+  </div>
+
+</body>
+
+</html>

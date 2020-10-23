@@ -1,0 +1,182 @@
+*{
+    box-sizing: border-box;
+    overflow: auto;
+    color: #39ff14;
+    font-family: 'Space Mono', monospace;
+    font-weight: bold;
+}
+
+body{
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-image: url(images/copyrightFreeEarth.jpg);
+  /*source: https://pixabay.com/photos/earth-lights-environment-globe-1149733/*/
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: 'Space Mono', monospace;
+}
+
+.wrapper{
+  width: 95%;
+  height: 100%;
+  margin: auto;
+  /*border: 5px gray solid;*/
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px white solid;
+  overflow: auto;
+}
+
+.regular {
+    color:black;
+    background-color: white;
+}
+
+.error {
+    color:red;
+    background-color: #f1948a;
+}
+
+/*removing number input field arrows for firefox*/
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/*removing number input field arrows for other browsers*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#details{
+  background-color: rgba(211, 211, 211, 0);
+}
+
+#title{
+  text-align: center;
+  /*border: 5px blue solid;*/
+}
+
+#row{
+  width: 100%;
+  clear:both;
+  overflow: auto;
+}
+
+#col1{
+  float: left;
+  width: 50%;
+  /*border: 5px red solid;
+  background-color: yellow;*/
+  padding: 100px;
+}
+
+#col2{
+  float: left;
+  width: 50%;
+  /*border: 5px yellow solid;
+  background-color: orange;*/
+}
+
+label[for=username], label[for=age], label[for=gender]{
+  width: 150px;
+  display: inline-block;
+  text-align: right;
+  padding: 10px;
+  margin: auto;
+  clear: both;
+
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+fieldset{
+  overflow: hidden;
+}
+
+input[type=text], input[type=number]{
+  width: 150px;
+  height: 2em;
+  text-align: right;
+  color: black;
+}
+
+label[for=gender]{
+  float: left;
+}
+
+input[type=radio]{
+  /*float: left;*/
+}
+
+#male, #female, #other{
+  float: left;
+}
+
+#spaceship{
+  display: block;
+  margin: auto;
+}
+
+button{
+  color:black;
+}
+
+option{
+  background-color: white;
+  padding: 0px;
+  float: left;
+  height: 2em;
+}
+
+#colorTag{
+  vertical-align: middle;
+}
+
+#startGame{
+  position: relative;
+  margin: 15px 15px 15px 15px;
+  left: 25%;
+}
+
+#resizer{
+  position: fixed;
+  top: 10px;
+  left: 91%;
+  padding: 0px;
+  margin: 0px;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.small {
+    font-size: 75%;
+}
+
+.normal {
+    font-size: 100%;
+}
+
+.large {
+    font-size: 150%;
+}
+
+a{
+  text-decoration: none;
+}
+
+.hideMe{
+  display: none;
+}
+
+.showMe{
+  display: initial;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

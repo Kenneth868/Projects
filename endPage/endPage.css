@@ -1,0 +1,90 @@
+*{
+    box-sizing: border-box;
+    overflow: auto;
+    font-family: 'Space Mono', monospace;
+    color: #39ff14;
+    font-weight: bold;
+    text-align: center;
+}
+
+body{
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-image: url(images/copyrightFreeEarth.jpg);
+  /*source: https://pixabay.com/photos/earth-lights-environment-globe-1149733/*/
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: 'Space Mono', monospace;
+}
+
+.wrapper{
+  width: 95%;
+  height: 100%;
+  margin: auto;
+  border: 5px gray solid;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1px white solid;
+  overflow: hidden;
+}
+
+#resizer{
+  position: fixed;
+  top: 10px;
+  left: 91%;
+  padding: 0px;
+  margin: 0px;
+}
+
+button{
+  color: black;
+}
+
+.userStats{
+  width: 50%;
+  height: 70%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+.stats{
+  width: 50%;
+  height: 70%;
+  float: left;
+  text-align: center;
+  overflow: auto;
+}
+
+#restart{
+  width: 50%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  margin-top: 50px;
+  overflow: auto;
+}
+
+#exit{
+  width: 50%;
+  float: left;
+  text-align: center;
+  margin-top: 50px;
+  overflow: auto;
+}
+
+.small {
+    font-size: 75%;
+}
+
+.normal {
+    font-size: 100%;
+}
+
+.large {
+    font-size: 150%;
+}
+
+span{
+  color: white;
+}

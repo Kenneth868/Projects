@@ -1,0 +1,724 @@
+*{
+    box-sizing: border-box;
+    overflow: auto;
+    font-family: 'Space Mono', monospace;
+    color: #39ff14;
+    font-weight: bold;
+}
+
+body{
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-image: url(images/copyrightFreeEarth.jpg);
+  /*source: https://pixabay.com/photos/earth-lights-environment-globe-1149733/*/
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: 'Space Mono', monospace;
+}
+
+.wrapper{
+  width: 95%;
+  height: 100%;
+  margin: auto;
+  /*border: 5px gray solid;*/
+  background-color: rgba(0, 0, 0, 0.7);
+/*  border: 1px white solid;*/
+  overflow: hidden;
+}
+
+#row{
+  width: 100%;
+  clear: both;
+  overflow: auto;
+}
+
+#col1{ /*stats + text log/display */
+  float: left;
+  width: 30%;
+  height: 100%;
+  border-right: 1px white solid;
+}
+
+#stats{
+  height:50%;
+  width:100%;
+  border-bottom: 1px white solid;
+  text-align: center;
+}
+
+#display{
+  height:50%;
+  width:100%;
+  padding: 5px 20px 5px 20px;
+  text-align: center;
+}
+
+#col2{ /*game text + game image/hp etc*/
+  float: left;
+  width: 70%;
+  height: 100%;
+  /*border: 5px black solid;*/
+}
+
+#gameText{
+  height:30%;
+  width: 100%;
+  position: relative;
+  border-top: 1px white solid;
+}
+
+#gameDetails{
+  height:70%;
+  width: 100%;
+  /*border: 5px blue solid;*/
+  text-align: center;
+}
+
+#desc{
+  text-align: center;
+}
+
+#image{
+  height: 50%;
+  width: 50%;
+}
+
+#hpstatus{
+  border: black 1px solid;
+  height:100%; /*100% is equal to 600px*/
+  background-color:red;
+  width:30px;
+  float: right;
+  overflow-y: hidden;
+}
+
+#o2status{
+  border: black 1px solid;
+  height:100%; /*100% is equal to 600px*/
+  background-color:white;
+  width:30px;
+  float: left;
+  overflow-y: hidden;
+}
+
+#healthbar{
+  width:100%;
+  height:100%;
+  background-color:green;
+  overflow-y: hidden;
+}
+
+#oxygenbar{
+  width:100%;
+  height:100%;
+  background-color:lightblue;
+  overflow-y: hidden;
+}
+
+button{
+  color: black;
+}
+
+a:after{
+  text-decoration: line-through;
+}
+
+.hideMe{
+  display: none;
+}
+
+.showMe{
+  display: initial;
+}
+
+#resizer{
+  position: fixed;
+  top: 10px;
+  left: 91%;
+  padding: 0px;
+  margin: 0px;
+}
+
+.small {
+    font-size: 75%;
+}
+
+.normal {
+    font-size: 100%;
+}
+
+.large {
+    font-size: 150%;
+}
+
+a{
+  text-decoration: none;
+  font-style: italic;
+}
+
+#statusBars{
+  border-bottom: 1px white solid;
+  text-align: center;
+}
+
+#statusBar1{
+  float: right;
+  width: 50%;
+  border-left: 1px white solid;
+}
+
+#statusBar2{
+  float: left;
+  width: 50%;
+}
+
+#enemyHpBar{
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+  top: 15%;
+  height: 100%;
+  width: 100%;
+  background-color:green;
+  float: left;
+}
+
+#enemyHpStatus{
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px black solid;
+  height: 30px;
+  width: 20%;
+  background-color: red;
+}
+
+#moveLeft{
+  text-indent: 30px;
+}
+
+#moveRight{
+  text-indent: 30px;
+}
+
+#timerBlock{
+  position: relative;
+}
+
+#scoreBlock{
+  position: relative;
+}
+
+#dialogue1{
+  width: 100%;
+}
+
+#dia1_Option1{
+  width: 50%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+}
+
+#dia1_Option2{
+  width: 50%;
+  float: left;
+  text-align: center;
+  overflow: auto;
+}
+
+#leftResult_Option1{
+  width: 50%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+}
+
+#leftResult_Option2{
+  width: 50%;
+  float: left;
+  text-align: center;
+  overflow: auto;
+}
+
+#rightResult_Option1{
+  width: 50%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#rightResult_Option2{
+  width: 50%;
+  float: left;
+  text-align: center;
+  overflow: auto;
+}
+
+#waitResult_Option1{
+  width: 50%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#waitResult_Option2{
+  width: 50%;
+  float: left;
+  text-align: center;
+  overflow: auto;
+}
+
+#doorResult_Option1{
+  width: 30%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#doorResult_Option2{
+  width: 30%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#doorResult_Option3{
+  width: 30%;
+  float: left;
+  text-align: center;
+  overflow: auto;
+}
+
+#tankResult_Option1{
+  width: 30%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#tankResult_Option2{
+  width: 30%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#tankResult_Option3{
+  width: 30%;
+  float: left;
+  overflow: auto;
+}
+
+#windowResult_Option1{
+  width: 30%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#windowResult_Option2{
+  width: 30%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#windowResult_Option3{
+  width: 30%;
+  float: left;
+  text-align: center;
+  overflow: auto;
+}
+
+#checkOxygenTanksOption1{
+  width: 50%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#checkOxygenTanksOption2{
+  width: 50%;
+  float: left;
+  text-align: center;
+  overflow: auto;
+}
+
+#checkHeatReflectorsOption1{
+  width: 50%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#checkHeatReflectorsOption2{
+  width: 50%;
+  float: left;
+  text-align: center;
+  overflow: auto;
+}
+
+#loudSoundOption1{
+  width: 50%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#loudSoundOption2{
+  width: 50%;
+  float: left;
+  text-align: center;
+  overflow: auto;
+}
+
+#goBackOption1{
+  width: 30%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#goBackOption2{
+  width: 30%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#goBackOption3{
+  width: 30%;
+  float: left;
+  text-align: center;
+  overflow: auto;
+}
+
+#ventMazeOption1{
+  width: 50%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#ventMazeOption2{
+  width: 50%;
+  float: left;
+  text-align: center;
+  overflow: auto;
+}
+
+#direction1West_Option1{
+  width: 50%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#direction1West_Option2{
+  width: 50%;
+  float: left;
+  text-align: center;
+  overflow: auto;
+}
+
+#direction2South_Option1{
+  width: 50%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#direction2South_Option2{
+  width: 50%;
+  float: left;
+  text-align: center;
+  overflow: auto;
+}
+
+#direction3South_Option1{
+  width: 50%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#direction3South_Option2{
+  width: 50%;
+  float: left;
+  text-align: center;
+  overflow: auto;
+}
+
+#direction3East_Option1{
+  width: 30%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#direction3East_Option2{
+  width: 30%;
+  float: left;
+  text-align: center;
+  overflow: auto;
+}
+
+#direction3East_Option3{
+  width: 30%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#direction4South_Option1{
+  text-align: center;
+}
+
+#direction4West_Option1{
+  width: 50%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#direction4West_Option2{
+  width: 50%;
+  float: left;
+  text-align: center;
+  overflow: auto;
+}
+
+#passwordRoomOption{
+  text-align: center;
+}
+
+#direction3East_Option1{
+ text-align: center;
+}
+
+#direction5North_Option1{
+  width: 50%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#direction5North_Option2{
+  width: 50%;
+  float: left;
+  text-align: center;
+  overflow: auto;
+}
+
+#leftVent_OxygenTanks{
+  width: 50%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#leftVent_HeatReflectors{
+  width: 50%;
+  float: left;
+  text-align: center;
+  overflow: auto;
+}
+
+#doorLocked_Option1{
+  width: 50%;
+  float: left;
+  text-align: center;
+  border-right: gray 1px solid;
+  overflow: auto;
+}
+
+#doorLocked_Option2{
+  width: 50%;
+  float: left;
+  text-align: center;
+  overflow: auto;
+}
+
+#o2TankInv{
+	positioning: relative;
+	left: 8 px;
+	top: 5px;
+	height: 30%;
+}
+
+#passwordInv{
+	positioning: relative;
+	left: 60 px;
+	top: 5px;
+	height: 30%;
+}
+
+#toolboxInv{
+	positioning: relative;
+	right: -5 px;
+	top: 5px;
+	width: 30%;
+}
+.taskDiscovered{
+	display:initial;
+}
+
+.taskCompleted{
+	text-decoration: line-through;
+	opacity: 70%;
+}
+
+.taskUndiscovered{
+	display:none;
+}
+
+.itemAcquired{
+	visibility: visible;
+}
+.itemUnacquired{
+	visibility: hidden;
+}
+
+.promptHidden{
+	display: none;
+}
+
+.promptDiscovered{
+	display: initial;
+}
+#gameDetails{
+  position:relative;
+}
+
+#mathsQuiz{
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 90%;
+  height: 90%;
+  box-sizing: border-box;
+  display: none;
+  position: absolute;
+  left: 5%;
+  top: 5%;
+}
+
+#oxygenBg{
+    height:100%;
+    z-index: 0;
+}
+
+#hallway{
+  height:100%;
+  z-index: 0;
+}
+
+#startQuizBtn{
+  width: 20%;
+  height:auto;
+  font-size: 150%;
+  position: absolute;
+  top: 40%;
+  left:40%;
+}
+#quizText {
+  position: absolute;
+  top: 10%;
+  left:20%;
+}
+
+#mathGame{
+  display:none;
+  position:absolute;
+  left:10%;
+  width: 80%;
+  height: 100%;
+
+}
+
+.headText{
+  font-size: 150%;
+}
+
+.questionText{
+  font-size: 140%;
+}
+
+#diffSelect{
+  position:absolute;
+  top:25%;
+  left: 40%;
+}
+
+.answers{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: absolute;
+  left:35%;
+  font-size: 140%;
+
+}
+
+/* #answers1{
+  position: absolute;
+  left:30%;
+  font-size: 140%;
+}
+
+#answers2{
+  position: absolute;
+  left:30%;
+  font-size: 140%;
+} */
+
+.answer{
+  float: left;
+  padding: 16px;
+}
+
+#successScreen{
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 90%;
+  height: 90%;
+  box-sizing: border-box;
+  display: none;
+  position: absolute;
+  left: 5%;
+  top: 5%;
+}
+
+#gameDetails {
+  z-index: 0;
+}
+
+#enemyShip {
+  z-index: -1;
+  width: auto;
+  height: 20%;
+  position: absolute;
+  left: 40%;
+  top: 40%;
+}

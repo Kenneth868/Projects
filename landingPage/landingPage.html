@@ -1,0 +1,90 @@
+<html>
+<head>
+  <title>Title of Game</title>
+  <link rel="stylesheet" type="text/css" href="landingPage.css">
+  <link href="https://fonts.googleapis.com/css?family=Space+Mono&display=swap" rel="stylesheet">
+  <script src="landingPage.js"></script>
+  </head>
+
+  <body onload="loadFromSession();" onfocusout="setFromValue(); startGame();">
+
+        <div id="resizer">
+          <button onclick="setSize('small');" style="font-size: 75%;">Aa</button>
+          <button onclick="setSize('normal');" style="font-size: 100%;">Aa</button>
+          <button onclick="setSize('large');" style="font-size: 150%;">Aa</button>
+        </div>
+
+    <div class="wrapper normal">
+
+      <div id="title">
+        <h1>Space Adventure Game</h1>
+        <!--Should be changed -->
+      </div>
+
+      <div id="row">
+        <span id="details">
+        <div id="col1">
+            <fieldset id="userDetails">
+           <legend>Player Details</legend>
+        <label for="username">Username: </label>
+        <input type="text" id="username" size="10" value="" class="input">
+        <span id="nameError" style="font-size: 0.75em; color: red;"></span>
+        <br/>
+
+        <label for="age">Age: </label>
+        <input type="number" id="age" size="3" value="" class="input">
+        <span id="ageError" style="font-size: 0.75em; color: red;"></span>
+          <br/>
+
+          <label for="gender">Gender: </label>
+          <div id="male">
+            <input type="radio" id="gender" name="gender" value="male">
+            <label for="male">Male</label><br>
+          </div>
+          <div id="female">
+            <input type="radio" id="gender" name="gender" value="female">
+            <label for="female">Female</label><br>
+          </div>
+          <div id="other">
+            <input type="radio" id="gender" name="gender" value="other">
+            <label for="other">Other</label>
+          </div>
+            <br/>
+                 </fieldset>
+
+                 <fieldset id="suitDetails">
+                   <legend>Spacesuit Details</legend>
+                   <label for="suit">Choose a Suit:</label>
+                   <select id="colours" onchange="setSuit();" style="background-color: transparent;">
+                      <option value="white" selected style="color: black;">White</option>
+                      <option value="red" style="color: red;">Red</option>
+                      <option value="green" style="color: green;">Green</option>
+                      <option value="blue" style="color: blue;">Blue</option>
+                      <option value="pink" style="color: pink;">Pink</option>
+                  </select>
+                   <!--<span id="colorError" style="font-size: 0.75em; color: red;"></span>-->
+                 </fieldset>
+
+              <button id="startGame" style="display: none;"> <!--Start button hidden until user enters details correctly-->
+                <a href="..\gamePage\gamePage.html" style="color: black;"-->Start Game</a>
+              </button>
+        </span>
+        <p id="introduction" style="text-align: center;">You are a space engineer travelling through the solar system on a research expedition. You are in charge of the entire ship and the other passengers to make it back home safe.
+          The ship is on route back to earth but supplies are running short and your passing through dangerous territories. <br/> Can <em>you</em> make it through the enemy spacecraft, foreign planets and asteroid storms?</p>
+
+         <!--<div id="alarmDiv"></div>-->
+
+        </div>
+
+        <div id="col2">
+          <div id="spaceSuits">
+              <img src="images/spaceSuitWhite.png" alt="White Space Suit" id="suitImg" class="center" style="width: 40%;">
+            <!--http://clipart-library.com/clipart/8T68RMeac.htm-->
+          </div>
+
+        </div>
+
+      </div>
+    </body>
+
+</html>
